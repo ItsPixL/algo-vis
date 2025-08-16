@@ -16,6 +16,7 @@ type ControlBarProps = {
   setSpeed: (data: number) => void;
   generateArray: () => void;
   startSorting: () => void;
+  isSorting: boolean;
 };
 
 // Control Bar
@@ -29,13 +30,19 @@ export const ControlBar = ({
   setSpeed,
   generateArray,
   startSorting,
+  isSorting,
 }: ControlBarProps) => {
   // Algorithm Selection
   const AlgorithmSelection = (
     <div>
       <div className="text-xl mb-3">Algorithm Selection</div>
       {algorithmsList.map((algorithm) => {
-        const btnState = algorithm === selectedAlgorithm ? "active" : "default";
+        const btnState =
+          algorithm === selectedAlgorithm
+            ? "active"
+            : isSorting
+            ? "disabled"
+            : "default";
         return (
           <Button
             key={algorithm}
@@ -83,8 +90,18 @@ export const ControlBar = ({
 
   const MainControls = (
     <div>
-      <Button onClickFunction={generateArray}>Generate New Array</Button>
-      <Button onClickFunction={startSorting}>Start</Button>
+      <Button
+        onClickFunction={generateArray}
+        btnState={isSorting ? "disabled" : "default"}
+      >
+        Generate New Array
+      </Button>
+      <Button
+        onClickFunction={startSorting}
+        btnState={isSorting ? "disabled" : "default"}
+      >
+        Start
+      </Button>
     </div>
   );
 
