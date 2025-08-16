@@ -10,6 +10,7 @@ import ControlBar from "./components/ControlBar";
 export const App = () => {
   const [selectedAlgorithm, setSelectedAlgorithm] = useState<string>("");
   const [arraySize, setArraySize] = useState<number>(50);
+  const [speed, setSpeed] = useState<number>(50);
 
   const algorithmList = [
     "Bubble Sort",
@@ -17,6 +18,13 @@ export const App = () => {
     "Merge Sort",
     "Quick Sort",
   ];
+
+  const generateArray = () => {
+    return null;
+  };
+  const startSorting = () => {
+    return null;
+  };
 
   return (
     <motion.div className="bg-[#f1f5f9] w-screen h-screen">
@@ -28,6 +36,10 @@ export const App = () => {
           algorithmsList={algorithmList}
           arraySize={arraySize}
           setArraySize={setArraySize}
+          speed={speed}
+          setSpeed={setSpeed}
+          generateArray={generateArray}
+          startSorting={startSorting}
         />
         <div>VISUALISATION</div>
       </motion.main>
