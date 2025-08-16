@@ -6,28 +6,34 @@ import { Button } from "./Button";
 
 // Types
 type ControlBarProps = {
-  selectedAlgorithm: number;
-  setSelectedAlgorithm: (data: number) => void;
+  selectedAlgorithm: string;
+  setSelectedAlgorithm: (data: string) => void;
+  algorithmsList: Array<string>;
 };
 
 // Control Bar
 export const ControlBar = ({
   selectedAlgorithm,
   setSelectedAlgorithm,
+  algorithmsList,
 }: ControlBarProps) => {
-  let color = "bg-gray-600";
-
-  if (selectedAlgorithm === 1) {
-    color = "bg-red-500";
-  }
-
   return (
     <motion.div>
-      <motion.div className="bg-slate-800 rounded-2xl px-5 py-10">
-        Controller
-        <Button color={color} onClickFunction={setSelectedAlgorithm}>
-          Bubble Sort
-        </Button>
+      <motion.div className="bg-[#e2e8f0] rounded-2xl px-5 py-10">
+        <div className="text-xl mb-3">Algorithm Selection</div>
+        {algorithmsList.map((algorithm) => {
+          const btnState =
+            algorithm === selectedAlgorithm ? "active" : "default";
+          return (
+            <Button
+              key={algorithm}
+              btnState={btnState}
+              onClickFunction={setSelectedAlgorithm}
+            >
+              {algorithm}
+            </Button>
+          );
+        })}
       </motion.div>
     </motion.div>
   );

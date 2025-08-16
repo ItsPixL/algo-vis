@@ -1,47 +1,47 @@
 // components/Button.tsx
 
 // Imports
-import { motion } from "motion/react";
+import { backIn, motion } from "motion/react";
 import type { ReactNode } from "react";
 
 // Types
 type BtnProps = {
   children: ReactNode;
-  color?: string;
-  hoverColor?: string;
-  onClickFunction: (data: number) => void; // FIX THIS
+  btnState?: "default" | "active" | "disabled";
+  onClickFunction: (data: string) => void;
 };
 
 // Button
 export const Button = ({
   children,
-  color = "bg-gray-600",
-  hoverColor = "#581c87",
+  btnState = "default",
   onClickFunction,
 }: BtnProps) => {
-  // Animations
+  // Motion
   const btnVariants = {
-    initial: { scale: 1, opacity: 1 },
-    whileHover: {
-      scale: 1.05,
-      backgroundColor: hoverColor,
-    },
-    whileTap: { scale: 0.95 },
+    initial: { scale: 1, backgroundColor: "#94a3b8" },
+    hover: { scale: 1.05, backgroundColor: "#d97706" },
+    click: { scale: 0.9, backgroundColor: "#fcd34d" },
+    active: { scale: 1, backgroundColor: "#fcd34d" },
   };
 
-  const handleClick = () => {
-    onClickFunction(1);
-  };
+  const currentVariant = btnState === "active" ? "active" : "initial";
 
   return (
     <div>
       <motion.button
-        className={`py-3 px-10 rounded-2xl cursor-pointer ${color}`}
+        className="py-3 px-10 rounded-2xl cursor-pointer"
         variants={btnVariants}
         initial="initial"
-        whileHover="whileHover"
-        whileTap="whileTap"
-        onClick={handleClick}
+        animate={currentVariant}
+        whileHover={btnState !== "disabled" ? "hover" : undefined}
+        whileTap={btnState !== "disabled" ? "click" : undefined}
+        onClick={() => {
+          if (btnState !== "disabled") {
+            onClickFunction("clicked");
+          }
+        }}
+        disabled={btnState === "disabled"}
       >
         {children}
       </motion.button>
