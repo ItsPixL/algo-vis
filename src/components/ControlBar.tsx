@@ -9,7 +9,7 @@ import Slider from "./Slider";
 type ControlBarProps = {
   selectedAlgorithm: string;
   setSelectedAlgorithm: (data: string) => void;
-  algorithmsList: Array<string>;
+  algorithmsList: string[];
   arraySize: number;
   setArraySize: (data: number) => void;
   speed: number;
@@ -53,7 +53,13 @@ export const ControlBar = ({
     <div>
       <div className="text-xl mb-3">Array Size</div>
       <div className="w-full max-w-md flex items-center justify-center">
-        <Slider min={0} max={100} step={5} value={speed} onChange={setSpeed} />
+        <Slider
+          min={5}
+          max={100}
+          step={5}
+          value={arraySize}
+          onChange={setArraySize}
+        />
       </div>
     </div>
   );
@@ -62,13 +68,7 @@ export const ControlBar = ({
     <div>
       <div className="text-xl mb-3">Speed</div>
       <div className="w-full max-w-md flex items-center justify-center">
-        <Slider
-          min={0}
-          max={100}
-          step={5}
-          value={arraySize}
-          onChange={setArraySize}
-        />
+        <Slider min={5} max={1000} step={5} value={speed} onChange={setSpeed} />
       </div>
     </div>
   );
