@@ -1,12 +1,11 @@
 // components/Button.tsx
 
 // Imports
-import { backIn, motion } from "motion/react";
-import type { ReactNode } from "react";
+import { motion } from "motion/react";
 
 // Types
 type BtnProps = {
-  children: ReactNode;
+  children: string;
   btnState?: "default" | "active" | "disabled";
   onClickFunction: (data: string) => void;
 };
@@ -20,7 +19,7 @@ export const Button = ({
   // Motion
   const btnVariants = {
     initial: { scale: 1, backgroundColor: "#94a3b8" },
-    hover: { scale: 1.05, backgroundColor: "#d97706" },
+    hover: { scale: 1.03, backgroundColor: "#d97706" },
     click: { scale: 0.9, backgroundColor: "#fcd34d" },
     active: { scale: 1, backgroundColor: "#fcd34d" },
   };
@@ -30,7 +29,7 @@ export const Button = ({
   return (
     <div>
       <motion.button
-        className="py-3 px-10 rounded-2xl cursor-pointer"
+        className="py-3 px-10 mb-2 rounded-2xl cursor-pointer w-full"
         variants={btnVariants}
         initial="initial"
         animate={currentVariant}
@@ -38,7 +37,7 @@ export const Button = ({
         whileTap={btnState !== "disabled" ? "click" : undefined}
         onClick={() => {
           if (btnState !== "disabled") {
-            onClickFunction("clicked");
+            onClickFunction(children);
           }
         }}
         disabled={btnState === "disabled"}
@@ -48,3 +47,5 @@ export const Button = ({
     </div>
   );
 };
+
+export default Button;

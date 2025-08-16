@@ -12,3 +12,5 @@ export const NavBar = () => {
     </motion.nav>
   );
 };
+
+export default NavBar;
