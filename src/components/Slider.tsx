@@ -8,6 +8,7 @@ interface SliderProps {
   step?: number;
   value?: number;
   onChange?: (value: number) => void;
+  unit?: string;
 }
 
 const Slider: React.FC<SliderProps> = ({
@@ -16,6 +17,7 @@ const Slider: React.FC<SliderProps> = ({
   step = 1,
   value,
   onChange,
+  unit,
 }) => {
   const trackRef = useRef<HTMLDivElement>(null);
   const [internalValue, setInternalValue] = useState(value ?? min);
@@ -87,7 +89,7 @@ const Slider: React.FC<SliderProps> = ({
       </div>
 
       <div className="text-sm text-gray-700 mt-2 text-center">
-        {currentValue}
+        {currentValue} {unit}
       </div>
     </div>
   );

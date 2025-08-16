@@ -59,6 +59,7 @@ export const ControlBar = ({
           step={5}
           value={arraySize}
           onChange={setArraySize}
+          unit={"bars"}
         />
       </div>
     </div>
@@ -68,7 +69,14 @@ export const ControlBar = ({
     <div>
       <div className="text-xl mb-3">Speed</div>
       <div className="w-full max-w-md flex items-center justify-center">
-        <Slider min={5} max={1000} step={5} value={speed} onChange={setSpeed} />
+        <Slider
+          min={5}
+          max={1000}
+          step={5}
+          value={speed}
+          onChange={setSpeed}
+          unit={"ms"}
+        />
       </div>
     </div>
   );
