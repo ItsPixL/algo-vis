@@ -18,7 +18,7 @@ export const Button = ({
 }: BtnProps) => {
   // Motion
   const btnVariants = {
-    initial: { scale: 1, backgroundColor: "#94a3b8" },
+    initial: { scale: 1, backgroundColor: "#cbd5e1" },
     hover: { scale: 1.03, backgroundColor: "#d97706" },
     click: { scale: 0.9, backgroundColor: "#fcd34d" },
     active: { scale: 1, backgroundColor: "#fcd34d" },
