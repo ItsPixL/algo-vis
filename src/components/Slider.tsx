@@ -93,9 +93,9 @@ const Slider: React.FC<SliderProps> = ({
           transition={{ type: "spring", stiffness: 300, damping: 20 }}
           initial={false}
           whileHover={
-            !sliderDisabled
-              ? { backgroundColor: "#d97706" }
-              : { backgroundColor: "#171717", cursor: "not-allowed" }
+            sliderDisabled
+              ? { backgroundColor: "#171717", cursor: "not-allowed" }
+              : { backgroundColor: "#d97706" }
           }
         />
       </div>

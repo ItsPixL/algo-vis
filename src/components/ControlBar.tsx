@@ -20,6 +20,7 @@ type ControlBarProps = {
   resumeSorting: () => void;
   stopSorting: () => void;
   isSorting: boolean;
+  paused: boolean;
 };
 
 // Control Bar
@@ -37,6 +38,7 @@ export const ControlBar = ({
   resumeSorting,
   stopSorting,
   isSorting,
+  paused,
 }: ControlBarProps) => {
   // Algorithm Selection
   const AlgorithmSelection = (
@@ -46,7 +48,7 @@ export const ControlBar = ({
         const btnState =
           algorithm === selectedAlgorithm
             ? "active"
-            : isSorting
+            : isSorting || paused
             ? "disabled"
             : "default";
         return (
@@ -73,7 +75,7 @@ export const ControlBar = ({
           value={arraySize}
           onChange={setArraySize}
           unit={"bars"}
-          sliderDisabled={isSorting}
+          sliderDisabled={isSorting || paused}
         />
       </div>
     </div>
@@ -90,7 +92,7 @@ export const ControlBar = ({
           value={speed}
           onChange={setSpeed}
           unit={"ms"}
-          sliderDisabled={isSorting}
+          sliderDisabled={isSorting || paused}
         />
       </div>
     </div>
@@ -106,12 +108,12 @@ export const ControlBar = ({
   ];
 
   const controlButtonConfigs = [
-    { label: "Pause", onClick: pauseSorting },
     { label: "Resume", onClick: resumeSorting },
+    { label: "Pause", onClick: pauseSorting },
     { label: "Stop", onClick: stopSorting },
   ];
 
-  const MainControls = (
+  const MainBtns = (
     <div>
       {mainButtonConfigs.map(({ label, onClick, disableWhenSorting }) => (
         <Button
@@ -122,7 +124,11 @@ export const ControlBar = ({
           {label}
         </Button>
       ))}
+    </div>
+  );
 
+  const ControlBtns = (
+    <div>
       <div className="w-full flex justify-between">
         {controlButtonConfigs.map(({ label, onClick }) => (
           <Button key={label} onClickFunction={onClick} btnState="default">
@@ -141,7 +147,7 @@ export const ControlBar = ({
         {ArraySlider}
         {SpeedSlider}
         <hr className="border-t border-gray-400" />
-        {MainControls}
+        {isSorting ? ControlBtns : paused ? ControlBtns : MainBtns}
       </motion.div>
     </motion.div>
   );

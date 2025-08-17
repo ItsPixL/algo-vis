@@ -25,6 +25,7 @@ export const App = () => {
   const [highlighted, setHighlighted] = useState<[number, number] | null>(null);
   const [sortedIndices, setSortedIndices] = useState<number[]>([]);
   const [isSorting, setIsSorting] = useState(false);
+  const [paused, setPaused] = useState(false);
   const timer = useRef<number | null>(null);
   const stepsRef = useRef<Step[]>([]);
   const stepIndex = useRef(0);
@@ -122,6 +123,7 @@ export const App = () => {
     if (timer.current !== null) {
       clearInterval(timer.current);
       timer.current = null;
+      setPaused(true);
       setIsSorting(false);
     }
   };
@@ -130,6 +132,7 @@ export const App = () => {
   const resumeSorting = () => {
     if (timer.current === null && stepIndex.current < stepsRef.current.length) {
       playSteps(speed);
+      setPaused(false);
     }
   };
 
@@ -142,6 +145,7 @@ export const App = () => {
     stepIndex.current = 0;
     stepsRef.current = [];
     setIsSorting(false);
+    setPaused(false);
     setHighlighted(null);
     setSortedIndices([]);
   };
@@ -165,6 +169,7 @@ export const App = () => {
           resumeSorting={resumeSorting}
           stopSorting={stopSorting}
           isSorting={isSorting}
+          paused={paused}
         />
         <div className="w-full">
           <ArrayBars
