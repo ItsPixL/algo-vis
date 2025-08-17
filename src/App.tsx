@@ -122,7 +122,7 @@ export const App = () => {
     if (timer.current !== null) {
       clearInterval(timer.current);
       timer.current = null;
-      setIsSorting(false); // mark paused
+      setIsSorting(false);
     }
   };
 
