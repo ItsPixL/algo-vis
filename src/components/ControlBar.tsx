@@ -16,6 +16,9 @@ type ControlBarProps = {
   setSpeed: (data: number) => void;
   generateArray: () => void;
   startSorting: () => void;
+  pauseSorting: () => void;
+  resumeSorting: () => void;
+  stopSorting: () => void;
   isSorting: boolean;
 };
 
@@ -30,6 +33,9 @@ export const ControlBar = ({
   setSpeed,
   generateArray,
   startSorting,
+  pauseSorting,
+  resumeSorting,
+  stopSorting,
   isSorting,
 }: ControlBarProps) => {
   // Algorithm Selection
@@ -90,20 +96,40 @@ export const ControlBar = ({
     </div>
   );
 
+  const mainButtonConfigs = [
+    {
+      label: "Generate New Array",
+      onClick: generateArray,
+      disableWhenSorting: true,
+    },
+    { label: "Start", onClick: startSorting, disableWhenSorting: true },
+  ];
+
+  const controlButtonConfigs = [
+    { label: "Pause", onClick: pauseSorting },
+    { label: "Resume", onClick: resumeSorting },
+    { label: "Stop", onClick: stopSorting },
+  ];
+
   const MainControls = (
     <div>
-      <Button
-        onClickFunction={generateArray}
-        btnState={isSorting ? "disabled" : "default"}
-      >
-        Generate New Array
-      </Button>
-      <Button
-        onClickFunction={startSorting}
-        btnState={isSorting ? "disabled" : "default"}
-      >
-        Start
-      </Button>
+      {mainButtonConfigs.map(({ label, onClick, disableWhenSorting }) => (
+        <Button
+          key={label}
+          onClickFunction={onClick}
+          btnState={disableWhenSorting && isSorting ? "disabled" : "default"}
+        >
+          {label}
+        </Button>
+      ))}
+
+      <div className="w-full flex justify-between">
+        {controlButtonConfigs.map(({ label, onClick }) => (
+          <Button key={label} onClickFunction={onClick} btnState="default">
+            {label}
+          </Button>
+        ))}
+      </div>
     </div>
   );
 

@@ -16,6 +16,7 @@ type Step =
 
 // App
 export const App = () => {
+  // States and Refs
   const [selectedAlgorithm, setSelectedAlgorithm] =
     useState<string>("Bubble Sort");
   const [array, setArray] = useState<number[]>([]);
@@ -25,7 +26,10 @@ export const App = () => {
   const [sortedIndices, setSortedIndices] = useState<number[]>([]);
   const [isSorting, setIsSorting] = useState(false);
   const timer = useRef<number | null>(null);
+  const stepsRef = useRef<Step[]>([]);
+  const stepIndex = useRef(0);
 
+  // List of Algorithms
   const algorithmList = [
     "Bubble Sort",
     "Insertion Sort",
@@ -33,6 +37,7 @@ export const App = () => {
     "Quick Sort",
   ];
 
+  // Generate Array
   const generateArray = useCallback(() => {
     const newArray = Array.from(
       { length: arraySize },
@@ -47,13 +52,26 @@ export const App = () => {
     generateArray();
   }, [arraySize, generateArray]);
 
+  // Start Sorting
   const startSorting = () => {
-    setHighlighted(null);
-    setSortedIndices([]);
-    const steps = bubbleSort(array);
-    playSteps({ steps, speed });
+    switch (selectedAlgorithm) {
+      case algorithmList[0]:
+        startBubble();
+        break;
+    }
+    // ADD CASES HERE
   };
 
+  // Start Bubble Sort
+  const startBubble = () => {
+    setHighlighted(null);
+    setSortedIndices([]);
+    stepsRef.current = bubbleSort(array);
+    stepIndex.current = 0;
+    playSteps(speed);
+  };
+
+  // Apply Step from Array
   const applyStep = (step: Step) => {
     switch (step.type) {
       case "compare": {
@@ -77,19 +95,20 @@ export const App = () => {
     }
   };
 
-  const playSteps = ({ steps, speed }: { steps: Step[]; speed: number }) => {
+  // Play Step from Array
+  const playSteps = (speed: number) => {
     if (timer.current !== null) {
       clearInterval(timer.current);
     }
 
-    let i = 0;
     setIsSorting(true);
 
     timer.current = window.setInterval(() => {
-      const step = steps[i];
+      const step = stepsRef.current[stepIndex.current];
       applyStep(step);
-      i++;
-      if (i >= steps.length) {
+      stepIndex.current++;
+
+      if (stepIndex.current >= stepsRef.current.length) {
         clearInterval(timer.current!);
         timer.current = null;
         setHighlighted(null);
@@ -98,6 +117,36 @@ export const App = () => {
     }, speed);
   };
 
+  // Pause Function
+  const pauseSorting = () => {
+    if (timer.current !== null) {
+      clearInterval(timer.current);
+      timer.current = null;
+      setIsSorting(false); // mark paused
+    }
+  };
+
+  // Resume Function
+  const resumeSorting = () => {
+    if (timer.current === null && stepIndex.current < stepsRef.current.length) {
+      playSteps(speed);
+    }
+  };
+
+  // Stop Function
+  const stopSorting = () => {
+    if (timer.current !== null) {
+      clearInterval(timer.current);
+      timer.current = null;
+    }
+    stepIndex.current = 0;
+    stepsRef.current = [];
+    setIsSorting(false);
+    setHighlighted(null);
+    setSortedIndices([]);
+  };
+
+  // App
   return (
     <motion.div className="bg-[#f1f5f9] w-screen h-screen">
       <NavBar />
@@ -112,6 +161,9 @@ export const App = () => {
           setSpeed={setSpeed}
           generateArray={generateArray}
           startSorting={startSorting}
+          pauseSorting={pauseSorting}
+          resumeSorting={resumeSorting}
+          stopSorting={stopSorting}
           isSorting={isSorting}
         />
         <div className="w-full">

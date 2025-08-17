@@ -39,7 +39,7 @@ export const Button = ({
   return (
     <div>
       <motion.button
-        className="py-3 px-10 mb-2 rounded-2xl cursor-pointer w-full"
+        className="py-3 px-8 mb-2 rounded-2xl cursor-pointer w-full"
         variants={btnVariants}
         initial="initial"
         animate={currentVariant}
