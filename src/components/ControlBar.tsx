@@ -67,6 +67,7 @@ export const ControlBar = ({
           value={arraySize}
           onChange={setArraySize}
           unit={"bars"}
+          sliderDisabled={isSorting}
         />
       </div>
     </div>
@@ -83,6 +84,7 @@ export const ControlBar = ({
           value={speed}
           onChange={setSpeed}
           unit={"ms"}
+          sliderDisabled={isSorting}
         />
       </div>
     </div>

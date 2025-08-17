@@ -22,9 +22,19 @@ export const Button = ({
     hover: { scale: 1.03, backgroundColor: "#d97706" },
     click: { scale: 0.9, backgroundColor: "#fcd34d" },
     active: { scale: 1, backgroundColor: "#fcd34d" },
+    disabled: {
+      backgroundColor: "#171717",
+      color: "#f8fafc",
+      cursor: "not-allowed",
+    },
   };
 
-  const currentVariant = btnState === "active" ? "active" : "initial";
+  const currentVariant =
+    btnState === "active"
+      ? "active"
+      : btnState === "disabled"
+      ? "disabled"
+      : "initial";
 
   return (
     <div>
