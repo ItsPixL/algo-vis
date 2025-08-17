@@ -23,6 +23,8 @@ const Slider: React.FC<SliderProps> = ({
 }) => {
   const trackRef = useRef<HTMLDivElement>(null);
   const [internalValue, setInternalValue] = useState(value ?? min);
+  const moveListenerRef = useRef<((e: MouseEvent) => void) | null>(null);
+  const upListenerRef = useRef<(() => void) | null>(null);
 
   const currentValue = value ?? internalValue;
   const percentage = ((currentValue - min) / (max - min)) * 100;
@@ -45,21 +47,32 @@ const Slider: React.FC<SliderProps> = ({
     [min, max, step, onChange, sliderDisabled]
   );
 
-  const handleDrag = (e: React.MouseEvent | MouseEvent) => {
-    if (!sliderDisabled) updateValueFromPosition(e.clientX);
-  };
+  const handleMouseMove = useCallback(
+    (e: MouseEvent) => {
+      if (!sliderDisabled) updateValueFromPosition(e.clientX);
+    },
+    [sliderDisabled, updateValueFromPosition]
+  );
+
+  const handleMouseUp = useCallback(() => {
+    if (moveListenerRef.current) {
+      window.removeEventListener("mousemove", moveListenerRef.current);
+    }
+    if (upListenerRef.current) {
+      window.removeEventListener("mouseup", upListenerRef.current);
+    }
+  }, []);
 
   const handleMouseDown = (e: React.MouseEvent) => {
     if (sliderDisabled) return;
 
     updateValueFromPosition(e.clientX);
-    const moveListener = (e: MouseEvent) => handleDrag(e);
-    const upListener = () => {
-      window.removeEventListener("mousemove", moveListener);
-      window.removeEventListener("mouseup", upListener);
-    };
-    window.addEventListener("mousemove", moveListener);
-    window.addEventListener("mouseup", upListener);
+
+    moveListenerRef.current = handleMouseMove;
+    upListenerRef.current = handleMouseUp;
+
+    window.addEventListener("mousemove", handleMouseMove);
+    window.addEventListener("mouseup", handleMouseUp);
   };
 
   useEffect(() => {
