@@ -9,6 +9,7 @@ import { ArrayBars } from "./components/ArrayBars";
 import bubbleSort from "./algorithms/bubbleSort";
 import type { Step } from "./algorithms/stepType";
 import insertionSort from "./algorithms/insertionSort";
+import selectionSort from "./algorithms/selectionSort";
 
 // App
 export const App = () => {
@@ -30,6 +31,7 @@ export const App = () => {
   const algorithmList = [
     "Bubble Sort",
     "Insertion Sort",
+    "Selection Sort",
     "Merge Sort",
     "Quick Sort",
   ];
@@ -60,6 +62,9 @@ export const App = () => {
       case algorithmList[1]:
         startInsertion();
         break;
+      case algorithmList[2]:
+        startSelection();
+        break;
     }
   };
 
@@ -73,6 +78,13 @@ export const App = () => {
   // Start Insertion Sort
   const startInsertion = () => {
     stepsRef.current = insertionSort(array);
+    stepIndex.current = 0;
+    playSteps(speed);
+  };
+
+  // Start Selection Sort
+  const startSelection = () => {
+    stepsRef.current = selectionSort(array);
     stepIndex.current = 0;
     playSteps(speed);
   };
