@@ -7,12 +7,8 @@ import NavBar from "./components/NavBar";
 import ControlBar from "./components/ControlBar";
 import { ArrayBars } from "./components/ArrayBars";
 import bubbleSort from "./algorithms/bubbleSort";
-
-// Types
-type Step =
-  | { type: "compare"; indices: [number, number] }
-  | { type: "swap"; indices: [number, number] }
-  | { type: "markSorted"; index: number };
+import type { Step } from "./algorithms/stepType";
+import insertionSort from "./algorithms/insertionSort";
 
 // App
 export const App = () => {
@@ -55,19 +51,28 @@ export const App = () => {
 
   // Start Sorting
   const startSorting = () => {
+    setHighlighted(null);
+    setSortedIndices([]);
     switch (selectedAlgorithm) {
       case algorithmList[0]:
         startBubble();
         break;
+      case algorithmList[1]:
+        startInsertion();
+        break;
     }
-    // ADD CASES HERE
   };
 
   // Start Bubble Sort
   const startBubble = () => {
-    setHighlighted(null);
-    setSortedIndices([]);
     stepsRef.current = bubbleSort(array);
+    stepIndex.current = 0;
+    playSteps(speed);
+  };
+
+  // Start Insertion Sort
+  const startInsertion = () => {
+    stepsRef.current = insertionSort(array);
     stepIndex.current = 0;
     playSteps(speed);
   };

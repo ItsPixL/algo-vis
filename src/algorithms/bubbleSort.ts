@@ -1,10 +1,6 @@
 // algorithms/bubbleSort.ts
 
-// Types
-type Step =
-  | { type: "compare"; indices: [number, number] }
-  | { type: "swap"; indices: [number, number] }
-  | { type: "markSorted"; index: number };
+import type { Step } from "./stepType";
 
 // Bubble Sort
 const bubbleSort = (arr: number[]): Step[] => {
