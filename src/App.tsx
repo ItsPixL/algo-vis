@@ -106,6 +106,14 @@ export const App = () => {
         });
         break;
       }
+      case "overwrite": {
+        setArray((prev) => {
+          const newArr = [...prev];
+          newArr[step.index] = step.value;
+          return newArr;
+        });
+        break;
+      }
       case "markSorted": {
         setSortedIndices((prev) => [...prev, step.index]);
         break;
