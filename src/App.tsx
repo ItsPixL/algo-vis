@@ -28,13 +28,7 @@ export const App = () => {
   const stepIndex = useRef(0);
 
   // List of Algorithms
-  const algorithmList = [
-    "Bubble Sort",
-    "Insertion Sort",
-    "Selection Sort",
-    "Merge Sort",
-    "Quick Sort",
-  ];
+  const algorithmList = ["Bubble Sort", "Insertion Sort", "Selection Sort"];
 
   // Generate Array
   const generateArray = useCallback(() => {
